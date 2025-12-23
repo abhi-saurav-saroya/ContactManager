@@ -2,6 +2,7 @@
 #include<string>
 #include<fstream>
 #include<vector>
+#include<limits>
 using namespace std;
 
 struct Contact {
@@ -9,6 +10,7 @@ struct Contact {
     string lastName;
     vector<unsigned long long> numbers;
 };
+
 class PhoneBook {
     private:
         vector<Contact> contacts;
@@ -23,6 +25,8 @@ class PhoneBook {
         void saveToFile();
         void loadFromFile();
         void menu();
+        bool nameExists(const string& first, const string& last);
+        bool numberExists(unsigned long long number);
 };
 
 void PhoneBook::menu() {
@@ -70,18 +74,49 @@ void PhoneBook::menu() {
     } while(choice != 6);
 }
 
+bool PhoneBook::nameExists(const string& first, const string& last) {
+    for (const Contact& c : contacts) {
+        if (c.firstName == first && c.lastName == last)
+            return true;
+    }
+    return false;
+}
+
+bool PhoneBook::numberExists(unsigned long long number) {
+    for (const Contact& c : contacts) {
+        for (unsigned long long num : c.numbers) {
+            if (num == number)
+                return true;
+        }
+    }
+    return false;
+}
+
 void PhoneBook::addContact() {
-    cout << endl;
-    cout << "\t1. Add New Contact\n";
-    cout << "\t2. Add to existing Contact\n";
     int subChoice;
-    cin >> subChoice;
+
+    while(1) {
+        cout << endl;
+        cout << "\t1. Add New Contact\n";
+        cout << "\t2. Add to existing Contact\n";
+        cout << "Enter your choice: ";
+
+        cin >> subChoice;
+        if(!cin) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Invalid input." << endl;
+            continue;
+        }
+        break;
+    }
 
     if(subChoice == 1) {
         cout << endl;
         cout << "Enter first name: ";
         string firstName, lastName;
-        cin >> firstName;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, firstName);
         cout << "Enter last name: ";
         cin >> lastName;
         cout << "Enter contact number: ";
@@ -95,22 +130,67 @@ void PhoneBook::addContact() {
             return;
         }
 
+        if(nameExists(firstName, lastName)) {
+            cout << "Contact with this name already exists." << endl;
+            return;
+        }
+
+        if(numberExists(cNumber)) {
+            cout << "This phone number already exists." << endl;
+            return;
+        }
+
         Contact c;
         c.firstName = firstName;
         c.lastName = lastName;
         c.numbers.push_back(cNumber);
-
         contacts.push_back(c);
 
-        ofstream file("phonebook.txt", ios::app);
-        file << firstName << " " << lastName << " " << cNumber << endl;
-        file.close();
+        // ofstream file("phonebook.txt", ios::app);
+        // file << firstName << " " << lastName << " " << cNumber << endl;
+        // file.close();
     }
 
     else if(subChoice == 2) {
         cout << endl;
-        cout << "Feature under development." << endl;
-        return;
+        string firstName, lastName;
+        unsigned long long cNumber;
+
+        cout << "Enter first name: ";
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, firstName);
+        cout << "Enter last name: ";
+        cin >> lastName;
+
+        bool found = false;
+
+        for (Contact& c : contacts) {
+            if (c.firstName == firstName && c.lastName == lastName) {
+                cout << "Enter new contact number: ";
+                cin >> cNumber;
+            
+                if (!cin) {
+                    cin.clear();
+                    cin.ignore(1000, '\n');
+                    cout << "Invalid number." << endl;
+                    return;
+                }
+            
+                if (numberExists(cNumber)) {
+                    cout << "This phone number already exists." << endl;
+                    return;
+                }
+            
+                c.numbers.push_back(cNumber);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            cout << "Contact not found." << endl;
+            return;
+        }
     } 
     
     else {
@@ -143,7 +223,7 @@ void PhoneBook::searchContact() {
     if(searchChoice == 1) {
         cout << endl;
         cout << "Enter first name: ";
-        cin >> fName;
+        getline(cin, fName);
     } 
     else if(searchChoice == 2) {
         cout << endl;
