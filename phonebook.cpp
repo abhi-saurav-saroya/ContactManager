@@ -23,13 +23,6 @@ class PhoneBook {
         void saveToFile();
         void loadFromFile();
         void menu();
-        // void inline clearScreen() {
-        //     #ifdef _WIN32
-        //         system("cls");
-        //     #else
-        //         system("clear");
-        //     #endif
-        // }
 };
 
 void PhoneBook::menu() {
@@ -48,7 +41,7 @@ void PhoneBook::menu() {
         if(!cin) {
             cin.clear();
             cin.ignore(1000, '\n');
-            cout << "Invalid input. Please enter a number between 1 and 6." << endl;
+            cout << "Invalid input. Please enter a number between 1 and 6." << endl << endl;
             continue;
         }
 
@@ -78,12 +71,14 @@ void PhoneBook::menu() {
 }
 
 void PhoneBook::addContact() {
+    cout << endl;
     cout << "\t1. Add New Contact\n";
     cout << "\t2. Add to existing Contact\n";
     int subChoice;
     cin >> subChoice;
 
     if(subChoice == 1) {
+        cout << endl;
         cout << "Enter first name: ";
         string firstName, lastName;
         cin >> firstName;
@@ -113,6 +108,7 @@ void PhoneBook::addContact() {
     }
 
     else if(subChoice == 2) {
+        cout << endl;
         cout << "Feature under development." << endl;
         return;
     } 
@@ -126,9 +122,10 @@ void PhoneBook::addContact() {
 }
 
 void PhoneBook::searchContact() {
-    cout << "1. Search by First Name\n";
-    cout << "2. Search by Last Name\n";
-    cout << "3. Search by Contact Number\n";
+    cout << endl;
+    cout << "\t1. Search by First Name\n";
+    cout << "\t2. Search by Last Name\n";
+    cout << "\t3. Search by Contact Number\n";
     int searchChoice;
 
     cin >> searchChoice;
@@ -144,15 +141,18 @@ void PhoneBook::searchContact() {
     unsigned long long cNumber;
 
     if(searchChoice == 1) {
+        cout << endl;
         cout << "Enter first name: ";
         cin >> fName;
     } 
     else if(searchChoice == 2) {
+        cout << endl;
         cout << "Enter last name: ";
         cin >> lName;
     } 
     else if(searchChoice == 3) {
         while(1) {
+            cout << endl;
             cout << "Enter contact number: ";
             cin >> cNumber;
             if(!cin) {
@@ -173,16 +173,19 @@ void PhoneBook::searchContact() {
     unsigned long long cNumberFile;
     while(file >> fNameFile >> lNameFile >> cNumberFile) {
         if(searchChoice == 1 && fName == fNameFile) {
+            cout << endl;
             cout << "First Name: " << fNameFile << endl;
             cout << "Last Name: " << lNameFile << endl;
             cout << "Contact Number: " << cNumberFile << endl;
         }
         else if(searchChoice == 2 && lName == lNameFile) {
+            cout << endl;
             cout << "First Name: " << fNameFile << endl;
             cout << "Last Name: " << lNameFile << endl;
             cout << "Contact Number: " << cNumberFile << endl;
         }
         else if(searchChoice == 3 && cNumber == cNumberFile) {
+            cout << endl;
             cout << "First Name: " << fNameFile << endl;
             cout << "Last Name: " << lNameFile << endl;
             cout << "Contact Number: " << cNumberFile << endl;
@@ -192,26 +195,32 @@ void PhoneBook::searchContact() {
 }
 
 void PhoneBook::displayContact() {
+    cout << endl;
     cout << "Feature under development." << endl;
 }
 
 void PhoneBook::updateContact() {
+    cout << endl;
     cout << "Feature under development." << endl;
 }
 
 void PhoneBook::deleteContact() {
+    cout << endl;
     cout << "Feature under development." << endl;
 }
 
 void PhoneBook::sortContacts() {
+    cout << endl;
     cout << "Feature under development." << endl;
 }
 
 void PhoneBook::saveToFile() {
+    cout << endl;
     cout << "Feature under development." << endl;
 }
 
 void PhoneBook::loadFromFile() {
+    cout << endl;
     cout << "Feature under development." << endl;
 }
 
