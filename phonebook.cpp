@@ -4,6 +4,7 @@
 #include<vector>
 #include<limits>
 #include<algorithm>
+#include<sstream>
 using namespace std;
 
 struct Contact {
@@ -537,11 +538,37 @@ void PhoneBook::saveToFile() {
 
 void PhoneBook::loadFromFile() {
     cout << endl;
-    cout << "Feature under development." << endl;
+    ifstream inFile("contacts.txt", ios::in);
+    if (!inFile) {
+        return;
+    }
+
+    contacts.clear();
+
+    string line;
+
+    while (getline(inFile, line)) {
+        if (line.empty()) {
+            continue;
+        }
+
+        istringstream iss(line);
+        Contact c;
+        iss >> c.firstName >> c.lastName;
+
+        unsigned long long num;
+        while (iss >> num) {
+            c.numbers.push_back(num);
+        }
+        contacts.push_back(c);
+    }
+
+    inFile.close();
 }
 
 int main() {
     PhoneBook pb;
+    pb.loadFromFile();
     pb.menu();
     return 0;
 }
