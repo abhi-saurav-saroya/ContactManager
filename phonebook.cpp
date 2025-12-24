@@ -31,6 +31,9 @@ class PhoneBook {
         bool numberExists(unsigned long long number);
         Contact* findContact(const string& first, const string& last);
         Contact* findContact(unsigned long long number);
+        ~PhoneBook() {
+            saveToFile();
+        }
 };
 
 string toLower(const string& s) {
