@@ -3,6 +3,7 @@
 #include<fstream>
 #include<vector>
 #include<limits>
+#include<algorithm>
 using namespace std;
 
 struct Contact {
@@ -483,8 +484,17 @@ void PhoneBook::deleteContact() {
 }
 
 void PhoneBook::sortContacts() {
-    cout << endl;
-    cout << "Feature under development." << endl;
+    sort(contacts.begin(), contacts.end(),
+        [](const Contact& a, const Contact& b) {
+            string aFirst = toLower(a.firstName);
+            string bFirst = toLower(b.firstName);
+
+            if (aFirst == bFirst) {
+                return toLower(a.lastName) < toLower(b.lastName);
+            }
+            return aFirst < bFirst;
+        }
+    );
 }
 
 void PhoneBook::saveToFile() {
