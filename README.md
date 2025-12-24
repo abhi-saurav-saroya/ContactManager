@@ -79,7 +79,15 @@ A console-based contact manager application implemented entirely in C++ using ob
 3. Compile the program with a C++ compiler:
 
 ```bash
-g++ contact_manager.cpp -o contact_manager
+g++ phonebook.cpp -o phonebook
+```
+4. Run the program:
+```bash
+# Linux / Mac
+./contact_manager
+
+# Windows
+contact_manager.exe
 ```
 
 ## Requirements
