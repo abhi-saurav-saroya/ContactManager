@@ -328,19 +328,15 @@ void PhoneBook::deleteContact() {
     cout << "Enter the First Name and Last Name of the contact to delete." << endl;
     cin >> fName >> lName;
 
-    Contact* c = findContact(fName, lName);
-    if (!c) {
-        cout << "Contact not found." << endl;
-        return;
-    } else {
-        for (auto it = contacts.begin(); it != contacts.end(); ++it) {
-            if (it->firstName == fName && it->lastName == lName) {
-                contacts.erase(it);
-                cout << "Contact deleted successfully." << endl;
-                return;
-            }
+    vector<Contact>::iterator it;
+    for (it = contacts.begin(); it != contacts.end(); ++it) {
+        if (it->firstName == fName && it->lastName == lName) {
+            contacts.erase(it);
+            cout << "All contact numbers of this contact deleted successfully." << endl;
+            return;
         }
     }
+    cout << "Contact not found." << endl;
 }
 
 void PhoneBook::sortContacts() {
