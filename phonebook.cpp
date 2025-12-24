@@ -323,7 +323,24 @@ void PhoneBook::updateContact() {
 
 void PhoneBook::deleteContact() {
     cout << endl;
-    cout << "Feature under development." << endl;
+    string fName, lName;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Enter the First Name and Last Name of the contact to delete." << endl;
+    cin >> fName >> lName;
+
+    Contact* c = findContact(fName, lName);
+    if (!c) {
+        cout << "Contact not found." << endl;
+        return;
+    } else {
+        for (auto it = contacts.begin(); it != contacts.end(); ++it) {
+            if (it->firstName == fName && it->lastName == lName) {
+                contacts.erase(it);
+                cout << "Contact deleted successfully." << endl;
+                return;
+            }
+        }
+    }
 }
 
 void PhoneBook::sortContacts() {
