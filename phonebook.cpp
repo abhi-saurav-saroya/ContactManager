@@ -318,7 +318,24 @@ void PhoneBook::searchContact() {
 
 void PhoneBook::displayContact() {
     cout << endl;
-    cout << "Feature under development." << endl;
+    if (contacts.empty()) {
+        cout << "No contacts to display. PhoneBook is empty." << endl;
+        return;
+    }
+
+    sortContacts();
+
+    cout << "Contacts List:" << endl;
+    cout << "-----------------------------------------" << endl;
+    for (const Contact& c : contacts) {
+        cout << "Name: " << c.firstName << " " << c.lastName << endl;
+        cout << "Numbers: ";
+        for (auto num : c.numbers) {
+            cout << num << " ";
+        }
+        cout << endl;
+        cout << "-----------------------------------------" << endl;
+    }
 }
 
 void PhoneBook::updateContact() {
